@@ -1,8 +1,18 @@
 package com.blog.services;
 
-import com.blog.entities.User;
+import java.util.List;
+
+import com.blog.payload.UserDto;
 
 public interface UserService {
-    // User createUser(User user);
+    UserDto createUser(UserDto user);
+
+    UserDto updateUser(UserDto user, Integer id);
+
+    UserDto getUserById(Integer id);
+
+    List<UserDto> getAllUsers();
+
+    void deleteUser(Integer id);
 
 }

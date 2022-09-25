@@ -1,10 +1,12 @@
 package com.blog.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.blog.entities.User;
+import com.blog.exception.ResourceNotFoundException;
 import com.blog.payload.UserDto;
 import com.blog.repository.userRepo;
 import com.blog.services.UserService;
@@ -21,27 +23,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto user, Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+    public UserDto updateUser(UserDto userdto, Integer id) {
+        User user = this.userrepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        user.setName(userdto.getName());
+        user.setEmail(userdto.getEmail());
+        user.setPassword(userdto.getPassword());
+        user.setAbout(userdto.getAbout());
+        User updatedUser = this.userrepo.save(user);
+        UserDto userDto1 = this.userToDto(updatedUser);
+        return userDto1;
     }
 
     @Override
     public UserDto getUserById(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+        User user = this.userrepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        return this.userToDto(user);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        // TODO Auto-generated method stub
-        return null;
+        List<User> users = this.userrepo.findAll();
+        List<UserDto> userDtos = users.stream().map(user -> this.userToDto(user)).collect(Collectors.toList());
+        return userDtos;
     }
 
     @Override
     public void deleteUser(Integer id) {
-        // TODO Auto-generated method stub
-
+        User user = this.userrepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        this.userrepo.delete(user);
     }
 
     private User dtoToUser(UserDto dtoObj) {

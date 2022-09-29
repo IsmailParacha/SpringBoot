@@ -25,14 +25,14 @@ public class UserController {
     private UserService userServices;
 
     // POST-create user
-    @PostMapping("/")
+    @PostMapping("/addUser/")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userdto) {
         UserDto createUserDto = this.userServices.createUser(userdto);
         return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
     }
 
     // PUT-update user
-    @PutMapping("/{id}")
+    @PutMapping("/updateUser/{id}")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userdto, @PathVariable Integer id) {
         UserDto updateUser = this.userServices.updateUser(userdto, id);
         return ResponseEntity.ok(updateUser);
@@ -40,20 +40,20 @@ public class UserController {
     }
 
     // DELETE-delete user
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer id) {
         this.userServices.deleteUser(id);
         return new ResponseEntity<ApiResponse>(new ApiResponse("User deleted successfully", true), HttpStatus.OK);
     }
 
     // GET- multiple users get
-    @GetMapping("/")
+    @GetMapping("/getUsers/")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(this.userServices.getAllUsers());
     }
 
     // GET- single user get
-    @GetMapping("/{id}")
+    @GetMapping("/getUser/{id}")
     public ResponseEntity<UserDto> getSingleUsers(@PathVariable Integer id) {
         return ResponseEntity.ok(this.userServices.getUserById(id));
     }

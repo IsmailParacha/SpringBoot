@@ -1,4 +1,4 @@
-package com.blog.services.impl;
+package com.blog.services.implementServices;
 
 import java.util.List;
 import java.util.stream.Collectors;

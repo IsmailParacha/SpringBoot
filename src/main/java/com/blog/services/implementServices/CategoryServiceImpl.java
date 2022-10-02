@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryServices {
     }
 
     @Override
-    public void deleteCategoory(Integer id) {
+    public void deleteCategory(Integer id) {
         Category cat = this.catRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
         this.catRepo.delete(cat);

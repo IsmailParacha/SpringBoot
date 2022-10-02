@@ -8,9 +8,9 @@ public interface CategoryServices {
 
     CategoryDto upadateCategory(CategoryDto catdto, Integer id);
 
-    CategoryDto getUserById(Integer id);
+    CategoryDto getCategoryById(Integer id);
 
-    List<CategoryDto> getAll();
+    List<CategoryDto> getAllCategory();
 
     void deleteCategoory(Integer id);
 }

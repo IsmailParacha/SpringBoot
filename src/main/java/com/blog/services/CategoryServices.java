@@ -1,7 +1,6 @@
 package com.blog.services;
 
 import java.util.List;
-
 import com.blog.payload.CategoryDto;
 
 public interface CategoryServices {

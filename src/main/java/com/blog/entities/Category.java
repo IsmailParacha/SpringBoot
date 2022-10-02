@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int catid;
     @Column(length = 100, nullable = false)
     private String title;
     private String description;

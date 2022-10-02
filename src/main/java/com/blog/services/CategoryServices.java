@@ -6,11 +6,11 @@ import com.blog.payload.CategoryDto;
 public interface CategoryServices {
     CategoryDto createCategory(CategoryDto catdto);
 
-    CategoryDto upadateCategory(CategoryDto catdto, Integer id);
+    CategoryDto upadateCategory(CategoryDto catdto, Integer catid);
 
-    CategoryDto getCategoryById(Integer id);
+    CategoryDto getCategoryById(Integer catid);
 
     List<CategoryDto> getAllCategory();
 
-    void deleteCategory(Integer id);
+    void deleteCategory(Integer catid);
 }

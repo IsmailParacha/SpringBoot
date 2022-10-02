@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryDto {
-    private int id;
+    private int catid;
     @NotEmpty
     @Size(min = 4, max = 100, message = "Title must  be min 4 Chars")
     private String title;

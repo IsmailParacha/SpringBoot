@@ -1,16 +1,10 @@
 package com.blog.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.*;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
 
+import lombok.*;
 @Entity
 @NoArgsConstructor
 @Getter
@@ -24,4 +18,6 @@ public class Category {
     @Column(length = 100, nullable = false)
     private String title;
     private String description;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Post> posts=new ArrayList<>();
 }

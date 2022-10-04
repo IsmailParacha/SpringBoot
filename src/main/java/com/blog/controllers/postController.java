@@ -1,5 +1,7 @@
 package com.blog.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class postController {
     private PostServices postservice;
 
     @RequestMapping("/user:{userId}/category:{categoryId}")
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postdto, @PathVariable Integer userId,@PathVariable Integer categoryId)
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postdto, @PathVariable Integer userId,@PathVariable Integer categoryId)
     {
        PostDto createPost= this.postservice.createPost(postdto, userId, categoryId);
        return new ResponseEntity<>(createPost,HttpStatus.CREATED);

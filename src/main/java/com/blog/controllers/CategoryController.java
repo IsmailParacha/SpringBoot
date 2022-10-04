@@ -2,6 +2,8 @@ package com.blog.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,7 @@ public class CategoryController {
 
     // Create
     @PostMapping("/addCategory/")
-    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto catdto) {
+    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto catdto) {
         CategoryDto createcategory = this.categoryServices.createCategory(catdto);
         return new ResponseEntity<>(createcategory, HttpStatus.CREATED);
 
@@ -24,7 +26,7 @@ public class CategoryController {
 
     // Update
     @PutMapping("/updateCategory/{catid}")
-    public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto catdto, @PathVariable Integer catid) {
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto catdto, @PathVariable Integer catid) {
         CategoryDto updateCategory = this.categoryServices.upadateCategory(catdto, catid);
         return ResponseEntity.ok(updateCategory);
     }

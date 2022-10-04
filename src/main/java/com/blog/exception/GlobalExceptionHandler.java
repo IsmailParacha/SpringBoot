@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         Map<String , String> resp=new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error)->{
             String fieldName=((FieldError)error).getField();
-            String message=error.getDefaultMessage();
+            String message="Not be empty!";
             resp.put(fieldName, message);
 
         });

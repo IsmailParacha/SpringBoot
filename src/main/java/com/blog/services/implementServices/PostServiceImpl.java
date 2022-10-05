@@ -2,6 +2,7 @@ package com.blog.services.implementServices;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.blog.repository.CategoryRepo;
 import com.blog.repository.PostRepo;
 import com.blog.repository.userRepo;
 import com.blog.services.PostServices;
+
 @Service
 public class PostServiceImpl implements PostServices {
     @Autowired
@@ -26,16 +28,18 @@ public class PostServiceImpl implements PostServices {
     private CategoryRepo categoryrepo;
 
     @Override
-    public PostDto createPost(PostDto postdto,Integer userId,Integer categoryId) {
-       User user=this.userrepo.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "userId", userId));
-       Category category=this.categoryrepo.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category", "categoryId", categoryId));
-        
-       Post post= this.modelMapper.map(postdto, Post.class);
-       post.setImageName("default");
-       post.setAddedDate(new Date());
-       post.setUser(user);
-       post.setCategory(category);
-       Post newpost= this.postrepo.save(post);      
+    public PostDto createPost(PostDto postdto, Integer userId, Integer categoryId) {
+        User user = this.userrepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
+        Category category = this.categoryrepo.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
+
+        Post post = this.modelMapper.map(postdto, Post.class);
+        post.setImageName("default");
+        post.setAddedDate(new Date());
+        post.setUser(user);
+        post.setCategory(category);
+        Post newpost = this.postrepo.save(post);
         return this.modelMapper.map(newpost, PostDto.class);
     }
 
@@ -48,7 +52,7 @@ public class PostServiceImpl implements PostServices {
     @Override
     public void deletePost(Integer postId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -65,8 +69,12 @@ public class PostServiceImpl implements PostServices {
 
     @Override
     public List<PostDto> getPostByCategory(Integer categoryId) {
-        // TODO Auto-generated method stub
-        return null;
+        Category cat = this.categoryrepo.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
+        List<Post> posts = this.postrepo.findByCategory(cat);
+        List<PostDto> postdtos = posts.stream().map((post) -> this.modelMapper.map(posts, PostDto.class))
+                .collect(Collectors.toList());
+        return postdtos;
     }
 
     @Override
@@ -74,5 +82,5 @@ public class PostServiceImpl implements PostServices {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
 }

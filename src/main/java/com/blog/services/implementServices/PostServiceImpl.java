@@ -51,7 +51,9 @@ public class PostServiceImpl implements PostServices {
 
     @Override
     public void deletePost(Integer postId) {
-        // TODO Auto-generated method stub
+        Post post = this.postrepo.findById(postId)
+        .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
+        this.postrepo.delete(post);
 
     }
 

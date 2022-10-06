@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.validation.constraints.*;
 
-import org.springframework.context.annotation.Primary;
-
 import lombok.*;
 
 @Getter

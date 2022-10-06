@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.validation.constraints.*;
 
+import org.springframework.context.annotation.Primary;
+
 import lombok.*;
 
 @Getter
@@ -11,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 
 public class PostDto {
+    private Integer postId;
     @NotEmpty
     @Size(min = 5, message = "Title must be minimum 5 chars!")
     private String title;

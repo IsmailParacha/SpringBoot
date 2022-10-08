@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.payload.ApiResponse;
 import com.blog.payload.PostDto;
 import com.blog.services.PostServices;
-
 
 @RestController
 @RequestMapping("/api/")
@@ -25,43 +25,41 @@ public class postController {
     private PostServices postservice;
 
     @PostMapping("user:{userId}/category:{categoryId}")
-    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postdto, @PathVariable Integer userId,@PathVariable Integer categoryId)
-    {
-       PostDto createPost= this.postservice.createPost(postdto, userId, categoryId);
-       return new ResponseEntity<>(createPost,HttpStatus.CREATED);
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postdto, @PathVariable Integer userId,
+            @PathVariable Integer categoryId) {
+        PostDto createPost = this.postservice.createPost(postdto, userId, categoryId);
+        return new ResponseEntity<>(createPost, HttpStatus.CREATED);
     }
 
     @GetMapping("/user:{userId}/posts")
-    public ResponseEntity<List<PostDto>> getPostByUser(@PathVariable Integer userId)
-    {
-        List<PostDto> posts=this.postservice.getPostByUser(userId);
-        return new ResponseEntity<List<PostDto>>(posts,HttpStatus.OK);
+    public ResponseEntity<List<PostDto>> getPostByUser(@PathVariable Integer userId) {
+        List<PostDto> posts = this.postservice.getPostByUser(userId);
+        return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
     }
+
     @GetMapping("/category:{catId}/posts")
-    public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable Integer catId)
-    {
-        List<PostDto> posts= this.postservice.getPostByCategory(catId);
-        return new ResponseEntity<List<PostDto>>(posts,HttpStatus.OK);
+    public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable Integer catId) {
+        List<PostDto> posts = this.postservice.getPostByCategory(catId);
+        return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDto>> getAllPost()
-    {
-       List<PostDto> allpost=this.postservice.getAllPost(null); 
-       return new ResponseEntity<List<PostDto>>(allpost,HttpStatus.OK);
+    public ResponseEntity<List<PostDto>> getAllPost(
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) Integer pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize) {
+        List<PostDto> allpost = this.postservice.getAllPost(pageNo, pageSize);
+        return new ResponseEntity<List<PostDto>>(allpost, HttpStatus.OK);
     }
 
     @GetMapping("/posts/id:{id}")
-    public ResponseEntity<PostDto>getSinglePost(@PathVariable Integer id)
-    {
-       PostDto post=this.postservice.getPostById(id);
-       return new ResponseEntity<PostDto>(post,HttpStatus.OK);
+    public ResponseEntity<PostDto> getSinglePost(@PathVariable Integer id) {
+        PostDto post = this.postservice.getPostById(id);
+        return new ResponseEntity<PostDto>(post, HttpStatus.OK);
     }
 
     @DeleteMapping("/post/id:{id}")
-    public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer id)
-    {
+    public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer id) {
         this.postservice.deletePost(id);
-        return new ResponseEntity<ApiResponse>(new ApiResponse("Post successfully deleted",true), HttpStatus.OK);
+        return new ResponseEntity<ApiResponse>(new ApiResponse("Post successfully deleted", true), HttpStatus.OK);
     }
 }

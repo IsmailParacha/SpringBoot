@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blog.entities.*;
@@ -52,21 +55,25 @@ public class PostServiceImpl implements PostServices {
     @Override
     public void deletePost(Integer postId) {
         Post post = this.postrepo.findById(postId)
-        .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
         this.postrepo.delete(post);
 
     }
 
     @Override
-    public List<PostDto> getAllPost(PostDto postdto) {
-        List<Post> allposts=this.postrepo.findAll();
-        List<PostDto> postdtos=allposts.stream().map((post)->this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+    public List<PostDto> getAllPost(Integer pageNo, Integer pageSize) {
+        Pageable page = PageRequest.of(pageNo, pageSize);
+        Page<Post> pagePosts = this.postrepo.findAll(page);
+        List<Post> allposts = pagePosts.getContent();
+        List<PostDto> postdtos = allposts.stream().map((post) -> this.modelMapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
         return postdtos;
     }
 
     @Override
     public PostDto getPostById(Integer postId) {
-       Post post= this.postrepo.findById(postId).orElseThrow(()-> new ResourceNotFoundException("POSt", "id", postId));
+        Post post = this.postrepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("POSt", "id", postId));
         return this.modelMapper.map(post, PostDto.class);
     }
 

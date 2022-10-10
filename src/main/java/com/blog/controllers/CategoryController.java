@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
+import com.blog.config.AppConstants;
 import com.blog.payload.*;
 import com.blog.services.CategoryServices;
 
@@ -40,8 +42,10 @@ public class CategoryController {
 
     // Get All categories
     @GetMapping("/getAllCategories/")
-    public ResponseEntity<List<CategoryDto>> getAllCategories() {
-        return ResponseEntity.ok(this.categoryServices.getAllCategory());
+    public ResponseEntity<List<CategoryDto>> getAllCategories(@RequestParam(value = "pageNo",defaultValue = AppConstants.PAGE_NO,required = false) Integer pageNo,
+    @RequestParam(value = "pageSize",defaultValue = AppConstants.PAGE_SIZE,required = false) Integer pageSize,
+    @RequestParam(value = "sortBy",defaultValue = AppConstants.C_SORT_BY,required = false) String sortBy,@RequestParam(value = "sortDir",defaultValue = AppConstants.SORT_DIR,required = false) String sortDir) {
+        return ResponseEntity.ok(this.categoryServices.getAllCategory(pageNo,pageSize,sortBy,sortDir));
     }
 
     // Get Single Category

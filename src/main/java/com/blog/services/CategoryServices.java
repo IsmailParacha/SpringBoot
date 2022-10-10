@@ -10,7 +10,7 @@ public interface CategoryServices {
 
     CategoryDto getCategoryById(Integer catid);
 
-    List<CategoryDto> getAllCategory();
+    List<CategoryDto> getAllCategory(Integer pageNo,Integer pageSize,String sortBy,String sortDir);
 
     void deleteCategory(Integer catid);
 }

@@ -23,9 +23,9 @@ public class Post{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
-    @Column(length = 50,nullable = false)
-    private String title;
     @Column(length = 100,nullable = false)
+    private String title;
+    @Column(length = 500,nullable = false)
     private String content;
     private String imageName;
     private Date addedDate;

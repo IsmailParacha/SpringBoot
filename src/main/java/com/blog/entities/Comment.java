@@ -12,7 +12,7 @@ import lombok.Setter;
 
 public class Comment {
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int commentId;
     private String content;
     @ManyToOne

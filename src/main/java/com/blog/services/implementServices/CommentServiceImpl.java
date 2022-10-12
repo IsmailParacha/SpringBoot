@@ -2,16 +2,16 @@ package com.blog.services.implementServices;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.blog.entities.Comment;
 import com.blog.entities.Post;
 import com.blog.exception.ResourceNotFoundException;
 import com.blog.payload.CommentDto;
-import com.blog.payload.PostDto;
 import com.blog.repository.CommentRepo;
 import com.blog.repository.PostRepo;
 import com.blog.services.CommentServices;
-
+@Service
 public class CommentServiceImpl implements CommentServices{
     @Autowired
    private CommentRepo commentRepo;

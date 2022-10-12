@@ -1,13 +1,18 @@
 package com.blog.controllers;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,7 +83,7 @@ public class postController {
     }
 
     // uploadImage
-    @PostMapping("/post/image/PostId/{postId}")
+    @PostMapping("/post/uploadimage/PostId:{postId}")
     public ResponseEntity<PostDto> uploadPostImage(@RequestParam("image") MultipartFile image,
             @PathVariable Integer postId) throws IOException {
         PostDto postDto = this.postservice.getPostById(postId);
@@ -88,5 +93,14 @@ public class postController {
         PostDto updatedPost = this.postservice.updatePost(postDto, postId);
         return new ResponseEntity<PostDto>(updatedPost, HttpStatus.OK);
 
+    }
+//download and view image
+//http://localhost:8080/api/post/imageName:002bc9f2-f575-49dd-aa7f-3600c33c0f8e.jpg pate the link to check image for testing
+    @GetMapping(value="/post/imageName:{imageName}",produces=MediaType.IMAGE_JPEG_VALUE)
+    public void downloadImagge(@PathVariable String imageName, HttpServletResponse response)throws IOException
+    {
+        InputStream resource=this.fileService.getResource(path, imageName);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource, response.getOutputStream());
     }
 }

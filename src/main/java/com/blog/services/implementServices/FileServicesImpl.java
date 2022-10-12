@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 // import java.util.UUID;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,9 +22,11 @@ public class FileServicesImpl implements FileServices {
     public String uploadIMage(String path, MultipartFile file) throws IOException {
         // file Name
         String name = file.getOriginalFilename();
-
+        // random file name
+            String randomID = UUID.randomUUID().toString();
+            String randomFileName = randomID.concat(name.substring(name.lastIndexOf('.')));
         // full path with name
-        String filePath = path + File.separator + name;
+        String filePath = path + File.separator + randomFileName;
 
         // create folder for images/resources
         File f = new File(path);
@@ -32,7 +35,7 @@ public class FileServicesImpl implements FileServices {
         }
 
         Files.copy(file.getInputStream(), Paths.get(filePath));
-        return name;
+        return randomFileName;
     }
 
     @Override

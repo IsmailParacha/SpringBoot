@@ -18,7 +18,7 @@ private userRepo userRepo;
 
 @Override
 public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-  User user=  this.userRepo.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("User", "email"+email, 0));
+  User user=  this.userRepo.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("User", "email:"+email, 0));
     return user;
 }
 }

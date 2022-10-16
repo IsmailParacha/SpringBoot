@@ -15,7 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.blog.Security.CustomUserDetailService;
+import com.blog.Security.JwtAuthenticationEntryPoint;
 import com.blog.Security.JwtAuthenticationFilter;
+
 @Configuration
 
 public class SecurityConfig {
@@ -26,43 +28,39 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.
-        csrf().disable()
-        .authorizeHttpRequests()
-        .antMatchers("/api/v1/auth/login").permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .exceptionHandling()
-        .authenticationEntryPoint((AuthenticationEntryPoint) this.jwtAuthenticationEntryPoint)
-        .and()
-        // .httpBasic();  for basic authentication
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.csrf().disable()
+                .authorizeHttpRequests()
+                .antMatchers("/api/v1/auth/login").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint((AuthenticationEntryPoint) this.jwtAuthenticationEntryPoint)
+                .and()
+                // .httpBasic(); for basic authentication
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-        
+
     }
-   
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception
-    {
+
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(this.customUserDetailService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
-    
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-         return authenticationConfiguration.getAuthenticationManager();
-    }
 
-  
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
 }

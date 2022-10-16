@@ -1,5 +1,6 @@
 package com.blog.controllers;
 
+import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.Security.JwtTokenHelper;
+import com.blog.exception.InvalidUserAndPassword;
 import com.blog.payload.JwtAuthRequest;
 import com.blog.payload.JwtAuthResponse;
 
@@ -56,7 +58,7 @@ public class AuthController {
 			this.authenticationManager.authenticate(authenticationToken);
 		} catch (BadCredentialsException e) {
 			System.out.println("Invalid Detal!!");
-			throw new Exception("Invalid username or password!!");
+			throw new InvalidUserAndPassword("Email/Username and password does not matched!!");
 		}
 	}
 

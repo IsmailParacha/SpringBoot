@@ -1,5 +1,6 @@
 package com.blog.controllers;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.Security.JwtTokenHelper;
+import com.blog.entities.User;
 import com.blog.exception.InvalidUserAndPassword;
 import com.blog.payload.JwtAuthRequest;
 import com.blog.payload.JwtAuthResponse;
+import com.blog.payload.UserDto;
 
 @RestController
 @RequestMapping("/api/v1/auth/")
@@ -31,6 +34,8 @@ public class AuthController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	@Autowired
+	private ModelMapper mapper;
 
 	// @Autowired
 	// private UserService userService;
@@ -45,7 +50,7 @@ public class AuthController {
 
 		JwtAuthResponse response = new JwtAuthResponse();
 		response.setToken(token);
-		// response.setUser(this.mapper.map((User) userDetails, UserDto.class));
+		response.setUser(this.mapper.map((User) userDetails, UserDto.class));
 		return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
 	}
 
@@ -54,6 +59,7 @@ public class AuthController {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
 				password);
 		try {
+
 			this.authenticationManager.authenticate(authenticationToken);
 		} catch (BadCredentialsException e) {
 			System.out.println("Invalid Detal!!");

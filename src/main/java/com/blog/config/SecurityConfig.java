@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .antMatchers("/api/v1/auth/login").permitAll()
-                .antMatchers(HttpMethod.DELETE).permitAll()// remove security from all GET APi
+                .antMatchers(HttpMethod.GET).permitAll()// remove security from all GET APi
                 .anyRequest()
                 .authenticated()
                 .and()

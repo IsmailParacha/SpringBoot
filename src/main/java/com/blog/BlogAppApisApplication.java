@@ -41,10 +41,10 @@ public class BlogAppApisApplication implements CommandLineRunner {
 		try{
 			Role role=new Role();
 			role.setId(AppConstants.ADMIN);
-			role.setName("ADMIN");
+			role.setName("ROLE_ADMIN");
 			Role role1=new Role();
 			role1.setId(AppConstants.NORMAL);
-			role1.setName("NORMAL");
+			role1.setName("ROLE_EMP");
 			// List<Role> roles=List.of(role,role1);
 			this.roleRepo.saveAll(List.of(role,role1));
 

@@ -64,7 +64,7 @@ public class AuthController {
 			this.authenticationManager.authenticate(authenticationToken);
 		} catch (BadCredentialsException e) {
 			System.out.println("Invalid Detal!!");
-			throw new InvalidUserAndPassword("Email/Username and password does not matched!!");
+			throw new InvalidUserAndPassword(" password does not matched!!");
 		}
 	}
 

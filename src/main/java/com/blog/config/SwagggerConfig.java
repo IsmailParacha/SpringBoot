@@ -1,9 +1,6 @@
 package com.blog.config;
 
-
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +28,8 @@ public class SwagggerConfig {
 	private ApiInfo getInfo() {
 
 		return new ApiInfo("Blogging Application : Backend Course",
-				"This project is developed by IsmailParacha", "1.0", "Terms of Service",
-				new Contact("Ismail", "https://github.com/IsmailParacha/SpringBoot.git", "@gmail.com"),
+				"This project is developed by Ismail Paracha", "1.0", "Terms of Service",
+				new Contact("Ismail Jan Paracha", "https://github.com/IsmailParacha/SpringBoot.git", "@gmail.com"),
 				"License of APIS", "API license URL", Collections.emptyList());
 	};
 

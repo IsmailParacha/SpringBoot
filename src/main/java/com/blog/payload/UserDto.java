@@ -7,6 +7,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 @NoArgsConstructor
@@ -21,6 +23,7 @@ public class UserDto {
     @NotEmpty
     @Email(message = "Email Address is not valid!!")
     private String email;
+    @JsonIgnore
     @NotEmpty
     @Size(min = 3, max = 10, message = "Passwordmust be min 4 char and max 10 chars!!")
     private String password;

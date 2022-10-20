@@ -1,1 +1,2 @@
-# SpringBoot Blog WebApp backend
+# SpringBoot Blog API's
+
